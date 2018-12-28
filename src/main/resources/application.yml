@@ -1,0 +1,29 @@
+server:
+  port: 8080
+
+management:
+  endpoint:
+    health:
+      show-details: when_authorized
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+      base-path: /monitor
+  server:
+    port: 8088
+
+spring:
+  security:
+    user:
+      name: test
+      password: test
+
+info:
+  app:
+    name: spring-boot-actuator
+    version: 1.0.0
+    encoding: @project.build.sourceEncoding@
+    java:
+      source: @java.version@
+      target: @java.version@
