@@ -27,7 +27,7 @@
         </encoder>
     </appender>
 
-    <appender name="vipkid_error"
+    <appender name="demo_error"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>ERROR</level>
@@ -64,12 +64,12 @@
         <appender-ref ref="SLOW_SQL"/>
     </appender>
 
-    <logger name="com.vipkid.tomcat.jdbc.pool.interceptor.SlowQueryReport" level="warn">
+    <logger name="com.demo.tomcat.jdbc.pool.interceptor.SlowQueryReport" level="warn">
         <appender-ref ref="ASYNC_SLOW_SQL"/>
     </logger>
     <root level="INFO">
         <appender-ref ref="FILE"/>
         <appender-ref ref="STDOUT"/>
-        <appender-ref ref="vipkid_error"/>
+        <appender-ref ref="demo_error"/>
     </root>
 </configuration>
