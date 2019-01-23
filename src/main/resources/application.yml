@@ -12,12 +12,12 @@ management:
       base-path: /monitor
   server:
     port: 8088
-
-spring:
-  security:
-    user:
-      name: test
-      password: test
+#
+#spring:
+#  security:
+#    user:
+#      name: test
+#      password: test
 
 info:
   app:

@@ -1,8 +1,11 @@
 package com.example.demo.handler;
 
-import com.example.demo.entity.JsonResult;
+import com.example.demo.entity.JSONResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -11,7 +14,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
 /**
@@ -23,62 +25,66 @@ import java.util.Arrays;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    public static final String DEFAULT_ERROR_VIEW = "error";
 
     @ExceptionHandler(RuntimeException.class)
     @ResponseBody
-    public JsonResult defaultHandler(HttpServletRequest request, Exception e) throws Exception{
-        e.printStackTrace();
-        log.error(e.getMessage());
-        JsonResult jsonResult = new JsonResult();
-        jsonResult.setCode("-1");
-        jsonResult.setMessage("未知错误");
-        jsonResult.setData("{}");
-        return jsonResult;
+    public JSONResult defaultHandler(Exception e) {
+        log.error("message: {}", e.getMessage(), e);
+
+        return JSONResult.error("-1", "未知错误", "{}");
     }
 
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     @ResponseBody
-    public JsonResult paramsMissing(MissingServletRequestParameterException e){
-        log.error(e.getMessage());
-        JsonResult jsonResult = new JsonResult();
-        jsonResult.setCode("-1");
-        jsonResult.setMessage(String.format( "缺少必要参数,参数名称为%s",e.getParameterName()));
-        jsonResult.setData("{}");
-        return jsonResult;
+    public JSONResult paramsMissing(MissingServletRequestParameterException e) {
+        log.error("message: {}", e.getMessage(), e);
+
+        String message = String.format("缺少必要参数,参数名称为%s", e.getParameterName());
+
+        return JSONResult.error("-1", message, "{}");
     }
 
     @ExceptionHandler(TypeMismatchException.class)
     @ResponseBody
-    public JsonResult paramsTypeNotMatch(TypeMismatchException e){
-        log.error(e.getMessage());
-        JsonResult jsonResult = new JsonResult();
-        jsonResult.setCode("-1");
-        jsonResult.setMessage(String.format( "参数类型不匹配,参数%s, 值：%s 类型应为%s",((MethodArgumentTypeMismatchException) e).getName(),e.getValue(),e.getRequiredType()));
-        jsonResult.setData("{}");
-        return jsonResult;
+    public JSONResult paramsTypeNotMatch(TypeMismatchException e) {
+        log.error("message: {}", e.getMessage(), e);
+        String message = String.format("参数类型不匹配,参数%s, 值：%s 类型应为%s", ((MethodArgumentTypeMismatchException) e).getName(), e.getValue(), e.getRequiredType());
+
+        return JSONResult.error("-1", message, "{}");
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
-    public JsonResult notValidException(MethodArgumentNotValidException e){
-        log.error(e.getMessage());
-        JsonResult jsonResult = new JsonResult();
-        jsonResult.setCode("-1");
-        jsonResult.setMessage("参数检验失败");
-        jsonResult.setData(e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
-        return jsonResult;
+    public JSONResult notValidException(MethodArgumentNotValidException e) {
+        log.error("message: {}", e.getMessage(), e);
+
+        FieldError fieldError = e.getBindingResult().getFieldError();
+        String message = fieldError == null ? "参数校验失败" : fieldError.getDefaultMessage();
+        Object data = fieldError == null ? e.getBindingResult().getAllErrors().get(0).getDefaultMessage() : fieldError.getField();
+        return JSONResult.error("-1", message, data);
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseBody
-    public JsonResult methodError(HttpRequestMethodNotSupportedException e){
+    public JSONResult methodError(HttpRequestMethodNotSupportedException e) {
         log.error(e.getMessage());
-        JsonResult jsonResult = new JsonResult();
-        jsonResult.setCode("-1");
-        jsonResult.setMessage("请求方法错误,需要" + Arrays.toString(e.getSupportedMethods()));
-        jsonResult.setData("{}");
-        return jsonResult;
+
+        String message = "请求方法错误,需要 {}" + Arrays.toString(e.getSupportedMethods());
+        return JSONResult.error("-1", message, "{}");
+    }
+
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    @ResponseBody
+    public JSONResult mediaTypeError(HttpMediaTypeNotSupportedException e) {
+        log.error("message: {}", e.getMessage(), e);
+        return JSONResult.error("-1", "mediaType Error! " + e.getMessage());
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseBody
+    public JSONResult paramRequired(HttpMessageNotReadableException e) {
+        log.error("message: {}", e.getMessage(), e);
+        return JSONResult.error("-1", "required request body is missing", "{}");
     }
 }

@@ -19,9 +19,11 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author zhangzongbo
  * @date 18-12-25 下午7:53
+ *
+ * AOP切片 打印日志有缺陷,参数校验失败失败时不能打印日志,弃用,改用filter
  */
 @Aspect
-@Component
+//@Component
 @Slf4j
 public class WebLogAspect {
 
@@ -37,15 +39,15 @@ public class WebLogAspect {
         // 接收到请求，记录请求内容
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
-//        ReadableHttpRequestWrapper requestWrapper = new ReadableHttpRequestWrapper(request);
+        ReadableHttpRequestWrapper requestWrapper = new ReadableHttpRequestWrapper(request);
 
         LogWrapper wrapper = LogWrapper.builder()
                 .url(request.getRequestURL().toString())
                 .httpMethod(request.getMethod())
                 .ip(request.getRemoteAddr())
                 .classMethod(joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName())
-                .params(JSONObject.toJSONString(request.getParameterMap()))
-//                .params(requestWrapper.getBody())
+//                .params(JSONObject.toJSONString(request.getParameterMap()))
+                .params(requestWrapper.getBody())
                 .build();
         log.info("<<=== {}", wrapper.toString());
 
