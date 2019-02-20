@@ -17,7 +17,7 @@ public class LoginDTO {
      * 用户名
      */
     @NotNull(message = "userName不能为空")
-    @Length(min = 3,max = 7,message = "用户名长度应在3-7之间")
+    @Length(min = 3,max = 15,message = "用户名长度应在3-15之间")
     String userName;
 
     /**
