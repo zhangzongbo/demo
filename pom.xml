@@ -16,6 +16,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <org.apache.shiro.version>1.4.0</org.apache.shiro.version>
     </properties>
 
     <dependencies>
@@ -70,6 +71,28 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.54</version>
         </dependency>
+
+        <!-- shiro -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>${org.apache.shiro.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>${org.apache.shiro.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.shiro/shiro-spring -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>${org.apache.shiro.version}</version>
+        </dependency>
+
+
 
 
 

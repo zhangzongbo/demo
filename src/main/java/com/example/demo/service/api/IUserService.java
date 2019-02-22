@@ -5,6 +5,7 @@ import com.example.demo.dto.LoginDTO;
 import com.example.demo.dto.UserResDto;
 import com.example.demo.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
 
 /**
  * <p>
@@ -29,5 +30,13 @@ public interface IUserService extends IService<User> {
      * @return bool
      */
     UserResDto login(LoginDTO loginDTO);
+
+    /**
+     * shiroLogin
+     * @param name 用户名
+     * @param password 密码
+     * @return
+     */
+    SimpleAuthenticationInfo shiroLogin(String name, String password);
 
 }

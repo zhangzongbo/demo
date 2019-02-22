@@ -5,12 +5,17 @@ import com.example.demo.dto.AddUserReqDto;
 import com.example.demo.dto.LoginDTO;
 import com.example.demo.dto.UserResDto;
 import com.example.demo.entity.User;
+import com.example.demo.entity.enums.UserStatusEnum;
 import com.example.demo.exception.CustomerException;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.service.api.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.util.MD5Utils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
@@ -62,4 +67,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             throw new CustomerException("用户名或密码错误");
         }
     }
+
+    @Override
+    public SimpleAuthenticationInfo shiroLogin(String name, String password) {
+        User user = userMapper.selectOne(new QueryWrapper<User>().eq("name",name));
+        if(user == null){
+            throw new UnknownAccountException("用户名或密码错误!");
+        }
+        if(!password.equals(user.getPassword())){
+            throw new IncorrectCredentialsException("用户名或密码错误!");
+        }
+        if (UserStatusEnum.LOCKED.getStringValue().equals(user.getStatus())){
+            throw new LockedAccountException("账号已被锁定,请联系管理员!");
+        }
+        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, user.getName());
+        return info;
+    }
+
+
 }

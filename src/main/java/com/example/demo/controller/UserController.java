@@ -11,12 +11,17 @@ import com.example.demo.entity.User;
 import com.example.demo.exception.CustomerException;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.service.api.IUserService;
+import com.example.demo.util.MD5Utils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.sql.ResultSet;
 
 /**
  * @author zhangzongbo
@@ -88,7 +93,35 @@ public class UserController {
             log.error("登录异常: {}", e.getMessage(), e);
             return JSONResult.error("用户名或密码错误!");
         }
+    }
 
+    @RequestMapping(value = "/shiroLogin", method = RequestMethod.POST)
+    @ResponseBody()
+    public JSONResult shiroLogin(@Valid @RequestBody LoginDTO loginDTO){
+        String password = MD5Utils.encode(loginDTO.getPassword());
+        UsernamePasswordToken token = new UsernamePasswordToken(loginDTO.getUserName(), password);
+        Subject subject = SecurityUtils.getSubject();
+        try {
+            subject.login(token);
+            return JSONResult.ok();
+        }catch (Exception e){
+            log.error("shiro 登录异常: {}", e.getMessage(), e);
+            return JSONResult.error(e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/getUserInfoShiro", method = RequestMethod.GET)
+    @ResponseBody()
+    public JSONResult getUserInfoShiro(){
+
+        Subject subject = SecurityUtils.getSubject();
+        User user = (User) subject.getPrincipal();
+        UserResDto resDto = new UserResDto();
+        resDto.setName(user.getName());
+        resDto.setCode(user.getCode());
+        resDto.setStatus(user.getStatus());
+        resDto.setCreateTime(user.getCreateTime());
+        return JSONResult.ok(resDto);
     }
 
 }
