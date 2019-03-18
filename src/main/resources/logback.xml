@@ -3,7 +3,7 @@
     <property name="LOG_HOME" value="logs"/>
     <property name="encoding" value="UTF-8"/>
     <property name="normal-pattern"
-              value="%d{yyyy-MM-dd/HH:mm:ss.SSS}|%X{localIp}|%X{requestId}|%X{requestSeq}|^_^|[%t] %-5level %logger{50}:%line - %m%n"/>
+              value="%d{yyyy-MM-dd/HH:mm:ss.SSS}|%X{sessionId}|^_^|[%t] %-5level %logger{50}:%line - %m%n"/>
     <property name="plain-pattern" value="%d{yyyy-MM-dd.HH:mm:ss} %msg%n"/>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">

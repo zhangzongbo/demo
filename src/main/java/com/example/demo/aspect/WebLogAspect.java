@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -39,6 +40,11 @@ public class WebLogAspect {
         // 接收到请求，记录请求内容
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies){
+            log.info("name: {}, value: {}", cookie.getName(), cookie.getValue());
+            System.out.println(cookie.getValue());
+        }
         ReadableHttpRequestWrapper requestWrapper = new ReadableHttpRequestWrapper(request);
 
         LogWrapper wrapper = LogWrapper.builder()

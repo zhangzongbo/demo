@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.sql.ResultSet;
 
 /**
  * @author zhangzongbo
