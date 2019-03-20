@@ -1,4 +1,4 @@
-package com.example.demo.task.delayTask;
+package com.example.demo.task.delaytask;
 
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.JedisPool;
@@ -12,13 +12,16 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 @Component
 public class RedisClient {
+
     public JedisPool getJedisPool(){
         JedisPoolConfig config = new JedisPoolConfig();
-        config.setMaxIdle(8);
-        config.setMinIdle(1);
+        config.setMaxIdle(10);
+        config.setMinIdle(2);
         config.setMaxWaitMillis(5000);
 
-        return new JedisPool(config);
+        String host = "127.0.0.1";
+        int port = 6379;
+        return new JedisPool(config, host, port);
     }
 
 

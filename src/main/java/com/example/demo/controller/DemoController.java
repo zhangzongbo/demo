@@ -6,14 +6,12 @@ import com.example.demo.entity.JSONResult;
 import com.example.demo.exception.CustomerException;
 import com.example.demo.service.AsyncTaskDemo;
 import com.example.demo.service.LoginServiceImpl;
-import com.example.demo.task.delayTask.DelayTaskConsumer;
-import com.example.demo.task.delayTask.DelayTaskProducer;
+import com.example.demo.task.delaytask.DelayTaskProducer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.attribute.standard.PrinterURI;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,7 +74,7 @@ public class DemoController {
     @ResponseBody()
     public JSONResult delayTask(@RequestParam("parentId") String parentId){
         log.info("param: {}", parentId);
-        String id = parentId + UUID.randomUUID();
+        String id = String.format("%s-%s",parentId , UUID.randomUUID());
         delayTaskProducer.produce(id, System.currentTimeMillis() + 2 * 1000L);
         return JSONResult.ok();
     }
