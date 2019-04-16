@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo.dto.AddUserReqDto;
+import com.example.demo.dto.BookListDto;
 import com.example.demo.dto.LoginDTO;
 import com.example.demo.dto.UserResDto;
 import com.example.demo.entity.JSONResult;
@@ -17,6 +18,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -81,6 +83,17 @@ public class UserController {
             return JSONResult.error("系统繁忙");
         }
     }
+
+    @PostMapping(value = "/bookList")
+    public JSONResult getBookList(@Validated @RequestBody BookListDto bookListDto){
+
+        /**
+         * service
+         */
+
+        return JSONResult.ok();
+    }
+
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody()

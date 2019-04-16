@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * @date 19-3-4 下午3:22
  */
 
-@Component
+//@Component
 public class LoginInterceptorConfig extends WebMvcConfigurerAdapter {
 
     @Autowired

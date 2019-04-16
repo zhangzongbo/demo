@@ -23,7 +23,7 @@ public class DelayTaskProducer {
         }catch (Exception e){
             log.error("延时队列 生产异常 {}", e.getMessage(), e);
         }finally {
-            jedis.close();
+//            jedis.close();
         }
     }
 }

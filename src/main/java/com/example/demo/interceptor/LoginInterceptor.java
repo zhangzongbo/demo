@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  * @date 19-3-4 下午3:17
  */
 
-@Component
+//@Component
 @Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
 

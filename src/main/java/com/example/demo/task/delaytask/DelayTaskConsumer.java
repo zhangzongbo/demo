@@ -55,7 +55,7 @@ public class DelayTaskConsumer {
                     threadPool.execute(() -> {
                         Jedis newJedis = new RedisClient().getJedisPool().getResource();
                         Long count = newJedis.zrem(Constants.DELAY_TASK_QUEUE, (String) id);
-                        newJedis.close();
+//                        newJedis.close();
                         if(count != null && count == 1){
                             try {
                                 Thread.sleep(120);
