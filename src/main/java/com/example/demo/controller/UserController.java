@@ -47,6 +47,9 @@ public class UserController {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("id",id);
         User u = userMapper.selectOne(queryWrapper);
+        if (u == null){
+            throw new CustomerException("未找到此用户!");
+        }
         log.info("user: {}",u);
 
         UserResDto userResDto = new UserResDto();

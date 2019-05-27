@@ -1,6 +1,7 @@
 package com.example.demo.handler;
 
 import com.example.demo.entity.JSONResult;
+import com.example.demo.exception.CustomerException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -70,7 +71,7 @@ public class GlobalExceptionHandler {
     public JSONResult methodError(HttpRequestMethodNotSupportedException e) {
         log.error(e.getMessage());
 
-        String message = "请求方法错误,需要 {}" + Arrays.toString(e.getSupportedMethods());
+        String message = "请求方法错误,需要 " + Arrays.toString(e.getSupportedMethods());
         return JSONResult.error("-1", message, "{}");
     }
 
@@ -85,6 +86,13 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public JSONResult paramRequired(HttpMessageNotReadableException e) {
         log.error("message: {}", e.getMessage(), e);
-        return JSONResult.error("-1", "required request body is missing", "{}");
+        return JSONResult.error("-1", "required request body is missing", e.getLocalizedMessage());
+    }
+
+    @ExceptionHandler(CustomerException.class)
+    @ResponseBody
+    public JSONResult customerException(CustomerException e){
+        log.error("message: {}", e.getMessage(), e);
+        return JSONResult.error("-1", e.getMessage(), "{}");
     }
 }

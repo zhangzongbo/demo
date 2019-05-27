@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  */
 
 @Slf4j
-@Component
+//@Component
 public class DelayTaskConsumer {
     private ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 
