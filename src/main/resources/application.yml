@@ -6,6 +6,10 @@ spring:
     host: 127.0.0.1
     port: 6379
     database: 0
+  security:
+    user:
+      name: test
+      password: test
 
 management:
   endpoint:
@@ -18,12 +22,8 @@ management:
       base-path: /monitor
   server:
     port: 8088
-#
-#spring:
-#  security:
-#    user:
-#      name: test
-#      password: test
+
+
 
 info:
   app:

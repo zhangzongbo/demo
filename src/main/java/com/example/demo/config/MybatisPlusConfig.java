@@ -1,7 +1,7 @@
 package com.example.demo.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
+//import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,12 +32,12 @@ public class MybatisPlusConfig {
      * 性能分析插件
      * @return
      */
-    @Bean
+//    @Bean
     /**
      * 设置 dev test 环境开启
      */
-    @Profile({"dev","test"})
-    public PerformanceInterceptor performanceInterceptor() {
-        return new PerformanceInterceptor();
-    }
+//    @Profile({"dev","test"})
+//    public PerformanceInterceptor performanceInterceptor() {
+//        return new PerformanceInterceptor();
+//    }
 }

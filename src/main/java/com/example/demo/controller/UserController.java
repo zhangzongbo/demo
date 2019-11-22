@@ -58,8 +58,8 @@ public class UserController {
         userResDto.setStatus(u.getStatus());
         userResDto.setCreateTime(u.getCreateTime());
 
-        int count = userMapper.selectCount(new QueryWrapper<User>().eq("code",1));
-        log.info("count: {}",count);
+//        int count = userMapper.selectCount(new QueryWrapper<User>().eq("code",1));
+//        log.info("count: {}",count);
 
         return JSONResult.ok(userResDto);
     }

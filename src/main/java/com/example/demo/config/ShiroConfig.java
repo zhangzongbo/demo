@@ -27,13 +27,13 @@ public class ShiroConfig {
         // 登录成功后跳转的url
         shiroFilterFactoryBean.setSuccessUrl("/index");
         // 未授权url
-        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/401");
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 配置退出过滤器，其中具体的退出代码Shiro已经替我们实现了
         filterChainDefinitionMap.put("/logout", "logout");
         filterChainDefinitionMap.put("/","anon");
-//        filterChainDefinitionMap.put("/**","authc");
-        filterChainDefinitionMap.put("/**","anon");
+        filterChainDefinitionMap.put("/**","authc");
+//        filterChainDefinitionMap.put("/**","anon");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
         return shiroFilterFactoryBean;
