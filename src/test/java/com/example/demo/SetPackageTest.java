@@ -4,8 +4,7 @@ import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.*;
 
 /**
  * @author zhangzongbo
@@ -16,6 +15,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class SetPackageTest {
 
     public static void main(String[] args) {
+
+
         ConcurrentHashMap concurrentHashMap = new ConcurrentHashMap();
 
         HashMap<String, String> hashMap = new HashMap<>(4, 2);
@@ -55,6 +56,8 @@ public class SetPackageTest {
         CopyOnWriteArrayList copyOnWriteArrayList = new CopyOnWriteArrayList();
 
         ArrayList<String> list = new ArrayList<>(16);
+
+        ExecutorService pool = Executors.newCachedThreadPool();
 
 
     }
