@@ -3,6 +3,7 @@ package com.example.demo.interceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  * @date 19-3-4 下午3:17
  */
 
-//@Component
+@Component
 @Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
 
@@ -31,5 +32,15 @@ public class LoginInterceptor implements HandlerInterceptor {
         log.info("url: {}",request.getRequestURL());
         log.info("param: {}",request.getQueryString());
         return true;
+    }
+
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+
     }
 }
