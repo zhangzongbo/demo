@@ -1,5 +1,6 @@
 package com.example.demo.task.delaytask;
 
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import redis.clients.jedis.Jedis;
@@ -24,6 +25,10 @@ public class JedisTest {
         for (int i = 0; i < 10; i ++){
             jedis.zadd(key, i * 1000 + now, "test-" + UUID.randomUUID());
         }
+
+
+        log.info(JSON.toJSONString(jedis.zrangeByScore(key, 0, System.currentTimeMillis(), 0, 10)));
+
         jedis.close();
         log.info("test end");
 

@@ -11,7 +11,7 @@ import com.example.demo.entity.JSONResult;
 import com.example.demo.entity.User;
 import com.example.demo.exception.CustomerException;
 import com.example.demo.mapper.UserMapper;
-import com.example.demo.service.api.IUserService;
+import com.example.demo.service.IUserService;
 import com.example.demo.util.MD5Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;

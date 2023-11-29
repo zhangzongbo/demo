@@ -1,4 +1,4 @@
-package com.example.demo.service.api;
+package com.example.demo.service;
 
 import com.example.demo.dto.AddUserReqDto;
 import com.example.demo.dto.LoginDTO;

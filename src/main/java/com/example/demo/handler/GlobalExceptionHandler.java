@@ -19,7 +19,7 @@ import java.util.Arrays;
 
 /**
  * @author zhangzongbo
- * @date 18-12-25 下午6:20
+ * create on 18-12-25 下午6:20
  */
 
 @ControllerAdvice
@@ -29,8 +29,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     @ResponseBody
-    public JSONResult defaultHandler(Exception e) {
-        log.error("message: {}", e.getMessage(), e);
+    public JSONResult<String> defaultHandler(Exception e) {
+        printLog(e);
 
         return JSONResult.error("-1", "未知错误", "{}");
     }
@@ -38,8 +38,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     @ResponseBody
-    public JSONResult paramsMissing(MissingServletRequestParameterException e) {
-        log.error("message: {}", e.getMessage(), e);
+    public JSONResult<String> paramsMissing(MissingServletRequestParameterException e) {
+        printLog(e);
 
         String message = String.format("缺少必要参数,参数名称为%s", e.getParameterName());
 
@@ -48,8 +48,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(TypeMismatchException.class)
     @ResponseBody
-    public JSONResult paramsTypeNotMatch(TypeMismatchException e) {
-        log.error("message: {}", e.getMessage(), e);
+    public JSONResult<String> paramsTypeNotMatch(TypeMismatchException e) {
+        printLog(e);
         String message = String.format("参数类型不匹配,参数%s, 值：%s 类型应为%s", ((MethodArgumentTypeMismatchException) e).getName(), e.getValue(), e.getRequiredType());
 
         return JSONResult.error("-1", message, "{}");
@@ -57,8 +57,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
-    public JSONResult notValidException(MethodArgumentNotValidException e) {
-        log.error("message: {}", e.getMessage(), e);
+    public JSONResult<Object> notValidException(MethodArgumentNotValidException e) {
+        printLog(e);
 
         FieldError fieldError = e.getBindingResult().getFieldError();
         String message = fieldError == null ? "参数校验失败" : fieldError.getDefaultMessage();
@@ -68,8 +68,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseBody
-    public JSONResult methodError(HttpRequestMethodNotSupportedException e) {
-        log.error(e.getMessage());
+    public JSONResult<String> methodError(HttpRequestMethodNotSupportedException e) {
+        printLog(e);
 
         String message = "请求方法错误,需要 " + Arrays.toString(e.getSupportedMethods());
         return JSONResult.error("-1", message, "{}");
@@ -77,22 +77,26 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     @ResponseBody
-    public JSONResult mediaTypeError(HttpMediaTypeNotSupportedException e) {
-        log.error("message: {}", e.getMessage(), e);
+    public JSONResult<String> mediaTypeError(HttpMediaTypeNotSupportedException e) {
+        printLog(e);
         return JSONResult.error("-1", "mediaType Error! " + e.getMessage());
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseBody
-    public JSONResult paramRequired(HttpMessageNotReadableException e) {
-        log.error("message: {}", e.getMessage(), e);
+    public JSONResult<String> paramRequired(HttpMessageNotReadableException e) {
+        printLog(e);
         return JSONResult.error("-1", "required request body is missing", e.getLocalizedMessage());
     }
 
     @ExceptionHandler(CustomerException.class)
     @ResponseBody
-    public JSONResult customerException(CustomerException e){
-        log.error("message: {}", e.getMessage(), e);
+    public JSONResult<String> customerException(CustomerException e){
+        printLog(e);
         return JSONResult.error("-1", e.getMessage(), "{}");
+    }
+
+    private void printLog(Exception e){
+        log.error("message: {}", e.getMessage(), e);
     }
 }

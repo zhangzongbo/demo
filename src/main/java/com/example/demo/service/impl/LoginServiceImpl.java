@@ -1,9 +1,9 @@
-package com.example.demo.service;
+package com.example.demo.service.impl;
 
 import com.example.demo.config.StaticConfig;
 import com.example.demo.dto.LoginDTO;
 import com.example.demo.entity.JSONResult;
-import com.example.demo.service.api.LoginService;
+import com.example.demo.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

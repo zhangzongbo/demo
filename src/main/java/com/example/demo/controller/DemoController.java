@@ -5,8 +5,10 @@ import com.example.demo.dto.LoginDTO;
 import com.example.demo.entity.JSONResult;
 import com.example.demo.exception.CustomerException;
 import com.example.demo.service.AsyncTaskDemo;
-import com.example.demo.service.LoginServiceImpl;
+import com.example.demo.service.impl.LoginServiceImpl;
 import com.example.demo.task.delaytask.DelayTaskProducer;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,8 +26,8 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/demo")
-
 @Slf4j
+@Api("demo")
 public class DemoController {
 
 
@@ -38,6 +40,7 @@ public class DemoController {
     @Autowired
     private DelayTaskProducer delayTaskProducer;
 
+    @ApiOperation("task")
     @RequestMapping("/task")
     @ResponseBody
     public JSONResult health(@RequestParam(value = "url") String url ,

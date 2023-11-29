@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
 
+
 /**
  * @author zhangzongbo
  * @date 19-2-20 上午10:38

@@ -14,10 +14,10 @@ import java.util.LinkedHashMap;
  * @date 19-2-21 下午3:48
  */
 
-@Configuration
+//@Configuration
 public class ShiroConfig {
 
-    @Bean
+//    @Bean
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager){
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 
